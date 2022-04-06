@@ -4,11 +4,12 @@ import be.vdab.keuken.domain.Artikel;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-class JpaArtikelRepository implements ArtikelRepository{
+class JpaArtikelRepository implements ArtikelRepository {
     private final EntityManager manager;
 
     JpaArtikelRepository(EntityManager manager) {
@@ -30,5 +31,12 @@ class JpaArtikelRepository implements ArtikelRepository{
         return manager.createNamedQuery("Artikel.findByNaamContains", Artikel.class)
                 .setParameter("zoals", '%' + woord + '%')
                 .getResultList();
+    }
+
+    @Override
+    public int verhoogAlleVerkoopPrijzen(BigDecimal percentage) {
+        return manager.createNamedQuery("Artikel.verhoogAlleVerkoopPrijzen")
+                .setParameter("percentage", percentage)
+                .executeUpdate();
     }
 }

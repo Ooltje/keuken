@@ -10,4 +10,10 @@
             order by a.naam
         </query>
     </named-query>
+    <named-query name="Artikel.verhoogAlleVerkoopPrijzen">
+        <query>
+            update Artikel a
+            set a.verkoopprijs = a.verkoopprijs + a.verkoopprijs * :percentage / 100
+        </query>
+    </named-query>
 </entity-mappings>

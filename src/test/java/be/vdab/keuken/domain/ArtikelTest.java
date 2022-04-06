@@ -12,7 +12,7 @@ class ArtikelTest {
     private Artikel artikel;
     @BeforeEach
     void beforeEach(){
-        artikel = new Artikel("test", BigDecimal.ONE, VERKOOPPRIJS);
+        artikel = new FoodArtikel("test", BigDecimal.ONE, VERKOOPPRIJS, 1);
     }
 
     @Test
