@@ -51,4 +51,13 @@ class JpaArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextT
         assertThat(artikel.getId()).isPositive();
         assertThat(countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
     }
+
+    @Test
+    void findByNaamContains() {
+        assertThat(repository.findByNaamContains("es"))
+                .hasSize(countRowsInTableWhere(ARTIKELS, "naam like '%es%'"))
+                .extracting(Artikel::getNaam)
+                .allSatisfy(naam -> assertThat(naam).containsIgnoringCase("es"))
+                .isSortedAccordingTo(String::compareToIgnoreCase);
+    }
 }

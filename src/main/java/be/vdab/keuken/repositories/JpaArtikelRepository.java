@@ -4,6 +4,7 @@ import be.vdab.keuken.domain.Artikel;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,5 +23,12 @@ class JpaArtikelRepository implements ArtikelRepository{
     @Override
     public void create(Artikel artikel) {
         manager.persist(artikel);
+    }
+
+    @Override
+    public List<Artikel> findByNaamContains(String woord) {
+        return manager.createNamedQuery("Artikel.findByNaamContains", Artikel.class)
+                .setParameter("zoals", '%' + woord + '%')
+                .getResultList();
     }
 }
